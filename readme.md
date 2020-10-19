@@ -25,3 +25,21 @@
 
 ```
 - 问题解决:
+
+使用下面这段代码来解决这个bug:
+
+``` javascript
+ //Component Class
+
+  let oldRange = this._range; // 保存老的range
+
+  let range = document.createRange(); //创建新的range,放在老range的start位置
+  range.setStart(oldRange.startContainer,oldRange.startOffset);
+  range.setEnd(oldRange.startContainer,oldRange.startOffset);
+  this[RENDER_TO_DOM](range);
+
+  oldRange.setStart(range.endContainer,range.endOffset);
+  oldRange.deleteContents();
+  
+
+```
