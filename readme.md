@@ -5,3 +5,23 @@
 # 课程代码
 
 [点击这里或者/project文件夹](./project)
+
+# 要点笔记
+
+### Lesson2:(41min:3s处) Range API的一个容易产生BUG的地方
+
+> 在lesson2中，完成的代码会出现一个奇怪的bug，当从左向右点击棋盘的时候，右侧会丢失DOM节点
+
+- 问题原因:
+
+下面`Component`类的代码，`rerender`方法会先清空Range,而一个空Range会被相邻的Range吞掉，导致后续的内容append到了隔壁Range
+
+``` javascript
+ //Component Class
+ rerender(){
+    this._range.deleteContents(); //这里会清空range
+    this[RENDER_TO_DOM](this._range);
+  }
+
+```
+- 问题解决:
